@@ -1,0 +1,55 @@
+<div class="container">
+<div class="row">
+<div class="col-md-8">
+
+<h1> <i class="glyphicon glyphicon-th-list"></i> Listing Students</h1>
+
+<table class="table" id="studentlist">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Mobile</th>
+      <th>Major</th>
+      <th ></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @students.each do |student| %>
+      <tr>
+        <td><%= student.name %></td>
+        <td><%= student.email %></td>
+        <td><%= student.mobile %></td>
+        <td><%= student.major %></td>
+        <td><%= link_to 'Show', student %>
+        <% if user_signed_in?%>
+              <% if can? :update, student %>
+                  <%= link_to edit_student_path(student) do  %>
+                  <i class="glyphicon glyphicon-pencil"></i>
+                    <%end%>
+                  
+              <% end %>
+              <% if can? :destroy, student %>
+                  <%= link_to  student, method: :delete, data: { confirm: 'Are you sure?' } do %>
+                    <i class="glyphicon glyphicon-trash"></i>
+                    <% end %>
+                  </td>
+              <% end %>
+       <% end %>
+       </tr>
+      <% end %>
+  </tbody>
+</table>
+</div>
+<div class="col-md-4">
+<br>
+<h2>Add new Student</h2>
+<% if user_signed_in? && (can? :create, Student.new)%>
+  <%= link_to new_student_path , class: "btn btn-primary" do %>
+  <i class="glyphicon glyphicon-plus"></i> Add student
+  <% end %>
+<% end %>
+</div>
+</div>
+</div>

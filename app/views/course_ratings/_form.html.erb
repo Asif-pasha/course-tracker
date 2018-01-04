@@ -1,0 +1,33 @@
+<%= form_for(@course_rating) do |f| %>
+  <% if @course_rating.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@course_rating.errors.count, "error") %> prohibited this course_rating from being saved:</h2>
+
+      <ul>
+      <% @course_rating.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :student_id %><br>
+    <%= f.collection_select :student_id, Student.all, :id, :name, prompt: "Select Student" %>
+  </div>
+  <div class="field">
+    <%= f.label :course_id %><br>
+    <%= f.collection_select :course_id, Course.all, :id, :name, prompt: "Select Course" %>
+  </div>
+  <div class="field">
+    <%= f.label :rating %><br>
+    <%= f.radio_button :rating, 1 %>1
+    <%= f.radio_button :rating, 2 %>2
+    <%= f.radio_button :rating, 3 %>3
+    <%= f.radio_button :rating, 4 %>4
+    <%= f.radio_button :rating, 5 %>5
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

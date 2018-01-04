@@ -1,0 +1,65 @@
+<div class="container">
+<div class="row">
+<div class="col-md-12">
+<ol class="breadcrumb">
+  <li><a href="/">Home</a></li>
+  <li><a href="./student">Library</a></li>
+  <li class="./student/">Ruby on Rails </li>
+</ol>
+</div>
+<div class="col-md-8">
+<h2>Course: <%= @course.name %></h2>
+  <p>
+  <strong>Description:</strong>
+  <%= @course.description %>
+</p>
+  <h6>Instructor:<%= link_to @course.instructor.name, instructor_path(@course.instructor.id)%></h6>
+
+<p>
+<div class="jumbotron">
+  <div class="container">
+    <h1>Limited seats</h1>
+    <p>Next batch starts on 11 jan,2018</p>
+    <!-- Button trigger modal -->
+  <a data-toggle="modal" href="#myModal" class="btn btn-primary btn-lg">Register</a>
+
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title">Registration Form</h4>
+        </div>
+        <div class="modal-body">
+          <%= render './students/form' %>
+        </div>
+       
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+  </div>
+</div>
+</p>
+<% if user_signed_in? %>
+<%= link_to 'Edit', edit_course_path(@course) %>
+<% end %> |
+<%= link_to 'Back', courses_path %>
+
+</div>
+
+<div class="col-md-4">
+<% if user_signed_in? %>
+   <h2>Student enrolled</h2>
+  <% if @course.students.empty? %>
+    <p> No course enrolled </p> 
+  <% else %>
+    <ul>
+      <% @course.students.each do |student| %>
+        <li><%= link_to student.name, student_path(student.id)%></li>
+      <% end %>
+    </ul>
+  <% end %>
+<% end %>
+</div>
+</div>
